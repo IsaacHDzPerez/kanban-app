@@ -44,7 +44,7 @@ export function KanbanBoard() {
   const result = await createTask(title, status)
 
   if (result.success && result.task) {
-    setTasks([...tasks, result.task])  // result.task es el Task real
+    setTasks([...tasks, result.task]) 
     setError("")
   } else {
     setError(result.error || "Error al crear la tarea")

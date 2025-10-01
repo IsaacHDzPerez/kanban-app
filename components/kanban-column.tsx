@@ -35,7 +35,7 @@ export function KanbanColumn({
   const handleCreateClick = () => {
     setIsCreating(true)
   }
-
+//crear con enter
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       if (newTaskTitle.trim()) {

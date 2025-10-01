@@ -1,6 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
 
-// Tipos
+//Tipos
 export type TaskStatus = "PENDIENTE" | "EN_CURSO" | "FINALIZADO"
 
 export interface Task {
@@ -9,8 +9,7 @@ export interface Task {
   status: TaskStatus
   userId: number
 }
-
-// Headers con autenticación
+//auth headers
 function getAuthHeaders() {
   const token = localStorage.getItem("token")
   return {
@@ -19,11 +18,12 @@ function getAuthHeaders() {
   }
 }
 
-// Auth functions
 export async function login(email: string, password: string): Promise<{ success: boolean; error?: string }> {
   if (!email.trim() || !password.trim()) {
     return { success: false, error: "Email y contraseña son requeridos" }
   }
+
+  //fetch 
 
   try {
     const res = await fetch(`${API_URL}/login`, {
@@ -57,8 +57,7 @@ export function isAuthenticated(): boolean {
   if (typeof window === "undefined") return false
   return !!localStorage.getItem("token")
 }
-
-// Task functions
+//lista de los task
 export async function listTasks(): Promise<Task[]> {
   try {
     const res = await fetch(`${API_URL}/tasks`, {
@@ -80,7 +79,7 @@ export async function listTasks(): Promise<Task[]> {
     throw error
   }
 }
-
+//crear task
 export async function createTask(
   title: string,
   status: TaskStatus = "PENDIENTE",
@@ -108,6 +107,7 @@ export async function createTask(
     return { success: false, error: "Error al crear la tarea" }
   }
 }
+//act task
 
 export async function updateTask(
   id: number,
@@ -132,6 +132,7 @@ export async function updateTask(
     return { success: false, error: "Error al actualizar la tarea" }
   }
 }
+//borrar task
 
 export async function deleteTask(id: number): Promise<{ success: boolean; error?: string }> {
   try {
