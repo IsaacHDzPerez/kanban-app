@@ -8,11 +8,22 @@ import { PrismaClient } from "@prisma/client";
 const app = express();
 const prisma = new PrismaClient();
 
-// Define el tipo Status basado en tu enum
 type Status = "PENDIENTE" | "EN_CURSO" | "FINALIZADO";
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json());
+const ALLOWED = new Set([
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  process.env.FRONT_ORIGIN, 
+].filter(Boolean));
+
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+    return ALLOWED.has(origin) ? cb(null, true) : cb(new Error("CORS"));
+  },
+  credentials: true,
+}));
+
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
@@ -85,4 +96,4 @@ app.delete("/tasks/:id", auth, async (req: any, res) => {
   res.status(204).end();
 });
 
-app.listen(4000, () => console.log("API on http://localhost:4000"));
+app.listen(process.env.PORT || 4000, () => console.log("API on", process.env.PORT || 4000));
