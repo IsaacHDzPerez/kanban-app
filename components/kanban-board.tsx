@@ -35,7 +35,7 @@ export function KanbanBoard() {
       } else {
         setError("Error al cargar las tareas")
       }
-    } finally {
+    } finally { 
       setLoading(false)
     }
   }
