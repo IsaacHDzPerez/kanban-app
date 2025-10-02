@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
-  "engines": {
-    "node": ">=18"
-  },
+  "engines": { "node": ">=18" },
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
-    "prestart": "prisma migrate deploy",
+    "prestart": "prisma migrate deploy && prisma db seed",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -31,7 +29,5 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  }
+  "prisma": { "seed": "ts-node prisma/seed.ts" }
 }
