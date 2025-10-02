@@ -23,11 +23,11 @@ model User {
 }
 
 model Task {
-  id     Int    @id @default(autoincrement())
-  title  String
-  status Status @default(PENDIENTE)
-  userId Int
-  user   User   @relation(fields: [userId], references: [id])
+  id      Int    @id @default(autoincrement())
+  title   String
+  status  String @default("PENDIENTE")
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id])
 
-  @@unique([userId, title])
+  @@unique([userId, title])  // <- en lugar de @unique en title
 }
