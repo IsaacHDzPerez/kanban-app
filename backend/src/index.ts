@@ -19,17 +19,15 @@ interface AuthRequest<P = any, ResBody = any, ReqBody = any, Q = any>
   user?: any;
 }
 
-const ALLOWED = new Set<string>(
-  ["http://localhost:3000", "http://127.0.0.1:3000", process.env.FRONT_ORIGIN]
-    .filter(Boolean) as string[]
-);
+const ALLOWED_ORIGINS = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  process.env.FRONT_ORIGIN
+].filter(Boolean) as string[];
 
 app.use(
   cors({
-    origin: (origin: string | undefined, cb: (err: Error | null, allow: boolean) => void) => {
-      if (!origin) return cb(null, true); // curl/Postman
-      return ALLOWED.has(origin) ? cb(null, true) : cb(new Error("CORS"), false);
-    },
+    origin: true,  
     credentials: true,
   })
 );
